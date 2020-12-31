@@ -24,6 +24,7 @@ public class MainForm extends JFrame implements ActionListener {
     private JMenuItem menuitem_vendor;
     private JMenuItem menuitem_purchase;
     private JMenuItem menuitem_buyClothes;
+    private JMenuItem menuitem_new_staff;
     private JMenuItem menuitem_review;
 
     private JMenu menu_account;
@@ -31,7 +32,6 @@ public class MainForm extends JFrame implements ActionListener {
     private JMenu menu_transaction;
 
     public MainForm() {
-
         desktopPane = new JDesktopPane();
         add(desktopPane);
 
@@ -48,8 +48,11 @@ public class MainForm extends JFrame implements ActionListener {
         menuitem_clothing.addActionListener(this);
         menuitem_vendor = new JMenuItem("Vendor");
         menuitem_vendor.addActionListener(this);
+        menuitem_new_staff = new JMenuItem("New Staff");
+        menuitem_new_staff.addActionListener(this);
         menu_manage.add(menuitem_clothing);
         menu_manage.add(menuitem_vendor);
+        menu_manage.add(menuitem_new_staff);
         menubar.add(menu_manage);
 
         menu_transaction = new JMenu("Transaction");
@@ -126,6 +129,8 @@ public class MainForm extends JFrame implements ActionListener {
             );
         } else if (source.equals(menuitem_buyClothes)) {
             desktopPane.add(new SalesForm());
+        } else if (source.equals(menuitem_new_staff)) {
+            desktopPane.add(new RegisterStaff());
         } else if (source.equals(menuitem_review)) {
             desktopPane.add(new ReviewForm());
         }

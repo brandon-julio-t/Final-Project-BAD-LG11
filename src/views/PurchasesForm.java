@@ -297,7 +297,7 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
                 stmt.setInt(1, Authentication.getUser().getUserId());
                 stmt.setInt(2, ((Vendor) vendorListModel.getSelectedItem()).getVendorId());
                 stmt.executeUpdate();
-
+                
                 sql = "select `PurchaseId` from `PurchaseHeader` order by `PurchaseId` desc limit 1";
                 ResultSet rs = Database.getInstance().executeQuery(sql);
                 rs.next();

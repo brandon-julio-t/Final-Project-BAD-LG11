@@ -58,7 +58,7 @@ public final class Database {
     public PreparedStatement prepareStatement(String query) {
         PreparedStatement ps = null;
         try {
-            ps = connection.prepareStatement(query);
+            ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         } catch (Exception e) {
             e.printStackTrace();
         }
