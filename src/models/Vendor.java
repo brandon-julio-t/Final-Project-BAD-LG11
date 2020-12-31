@@ -112,4 +112,8 @@ public class Vendor {
 		this.VendorPhoneNumber = vendorPhoneNumber;
 	}
 
+	@Override
+	public String toString() {
+		return getVendorName();
+	}
 }

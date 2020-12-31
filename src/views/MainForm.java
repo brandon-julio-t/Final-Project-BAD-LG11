@@ -2,11 +2,17 @@ package views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import repositories.ClothingSizeRepository;
+import repositories.ClothingTypeRepository;
+import repositories.CustomerRepository;
+import repositories.StaffRepository;
 
 public class MainForm extends JFrame implements ActionListener {
 
@@ -59,7 +65,6 @@ public class MainForm extends JFrame implements ActionListener {
         menuitem_review = new JMenuItem("Review");
         menuitem_review.addActionListener(this);
         menu_transaction.add(menuitem_review);
-        menu_transaction.setVisible(false);
         menubar.add(menu_transaction);
 
         setJMenuBar(menubar);
@@ -74,6 +79,7 @@ public class MainForm extends JFrame implements ActionListener {
         menu_account.setVisible(true);
         menu_manage.setVisible(true);
         menu_transaction.setVisible(false);
+        setVisible(true);
     }
 
     public void staff() {
@@ -83,6 +89,7 @@ public class MainForm extends JFrame implements ActionListener {
         menuitem_purchase.setVisible(true);
         menuitem_buyClothes.setVisible(false);
         menuitem_review.setVisible(false);
+        setVisible(true);
     }
 
     public void customer() {
@@ -92,6 +99,7 @@ public class MainForm extends JFrame implements ActionListener {
         menuitem_purchase.setVisible(false);
         menuitem_buyClothes.setVisible(true);
         menuitem_review.setVisible(true);
+        setVisible(true);
     }
 
     @Override
@@ -101,13 +109,21 @@ public class MainForm extends JFrame implements ActionListener {
 
         if (source == (menuitem_logout)) {
             this.dispose();
-            new LoginForm();
+            new LoginForm(
+                    new CustomerRepository(),
+                    new StaffRepository()
+            );
         } else if (source.equals(menuitem_vendor)) {
             desktopPane.add(new MasterVendorForm());
         } else if (source.equals(menuitem_clothing)) {
             desktopPane.add(new MasterClothingForm());
         } else if (source.equals(menuitem_purchase)) {
-            desktopPane.add(new PurchasesForm());
+            desktopPane.add(
+                    new PurchasesForm(
+                            new ClothingTypeRepository(),
+                            new ClothingSizeRepository()
+                    )
+            );
         } else if (source.equals(menuitem_buyClothes)) {
             desktopPane.add(new SalesForm());
         } else if (source.equals(menuitem_review)) {

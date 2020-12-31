@@ -20,7 +20,7 @@ import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import models.Product;
+import models.Clothing;
 
 public class MasterClothingForm extends JInternalFrame implements ActionListener {
 
@@ -57,7 +57,7 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 	private DefaultTableModel dtm;
 	private JScrollPane jsp;
 
-	private Vector<Product> products;
+	private Vector<Clothing> products;
 	private int selectedId = -1;
 
 	public MasterClothingForm() {
@@ -255,7 +255,7 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 		}
 
 		if (e.getSource() == delete) {
-			Product.deleteProduct(selectedId);
+			Clothing.deleteProduct(selectedId);
 			JOptionPane.showMessageDialog(null, "Delete Data Success");
 		} else {
 			if (!validateData())
@@ -268,12 +268,12 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 			int intquantityField = (Integer) quantityField.getValue();
 
 			if (e.getSource() == add) {
-				Product.insertProduct(strnameField, intclothingtypeField, intsizeField, intpriceField,
+				Clothing.insertProduct(strnameField, intclothingtypeField, intsizeField, intpriceField,
 						intquantityField);
 				JOptionPane.showMessageDialog(null, "Register Data Success");
 			} else if (e.getSource() == update) {
 				JOptionPane.showMessageDialog(null, "Update Data Success");
-				Product.updateProduct(selectedId, strnameField, intclothingtypeField, intsizeField, intpriceField,
+				Clothing.updateProduct(selectedId, strnameField, intclothingtypeField, intsizeField, intpriceField,
 						intquantityField);
 			}
 		}
@@ -295,8 +295,8 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 		Vector<Object> tableData;
 		dtm.setRowCount(0);
 
-		products = Product.getAll();
-		for (Product product : products) {
+		products = Clothing.getAll();
+		for (Clothing product : products) {
 			tableData = new Vector<>();
 			tableData.add(product.getClothingId());
 			tableData.add(product.getClothingSizeId());

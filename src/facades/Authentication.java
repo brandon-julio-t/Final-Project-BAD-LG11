@@ -1,6 +1,6 @@
 package facades;
 
-import models.User;
+import models.abstracts.User;
 
 public class Authentication {
     private static User user = null;

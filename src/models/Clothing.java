@@ -7,7 +7,7 @@ import java.util.Vector;
 
 import facades.Database;
 
-public class Product {
+public class Clothing {
 	private int ClothingId;
 	private int ClothingSizeId;
 	private int ClothingTypeId;
@@ -15,13 +15,13 @@ public class Product {
 	private int ClothingPrice;
 	private int ClothingStock;
 
-	public static Vector<Product> getAll() {
-		Vector<Product> products = new Vector<Product>();
+	public static Vector<Clothing> getAll() {
+		Vector<Clothing> products = new Vector<Clothing>();
 		ResultSet rs = Database.getInstance().executeQuery("SELECT * FROM clothing");
 		try {
 			while (rs.next()) {
 				products.add(
-						new Product(rs.getInt("ClothingId"), rs.getInt("ClothingSizeId"), rs.getInt("ClothingTypeId"),
+						new Clothing(rs.getInt("ClothingId"), rs.getInt("ClothingSizeId"), rs.getInt("ClothingTypeId"),
 								rs.getString("ClothingName"), rs.getInt("ClothingPrice"), rs.getInt("ClothingStock")));
 			}
 		} catch (SQLException e) {
@@ -122,7 +122,7 @@ public class Product {
 		this.ClothingStock = clothingStock;
 	}
 
-	public Product(int clothingId, int clothingSizeId, int clothingTypeId, String clothingName, int clothingPrice, int clothingStock) {
+	public Clothing(int clothingId, int clothingSizeId, int clothingTypeId, String clothingName, int clothingPrice, int clothingStock) {
 		super();
 		this.ClothingId = clothingId;
 		this.ClothingSizeId = clothingSizeId;

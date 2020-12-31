@@ -4,12 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,129 +15,128 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import facades.Database;
+import facades.Authentication;
+import models.Customer;
+import models.Staff;
+import models.abstracts.User;
+import repositories.CustomerRepository;
+import repositories.StaffRepository;
 
 public class LoginForm extends JFrame implements ActionListener {
-	JButton registerBtn;
-	JButton loginBtn;
-	JTextField emailTf;
-	JPasswordField passTf;
+    private final CustomerRepository customerRepository;
+    private final StaffRepository staffRepository;
+    JButton registerBtn;
+    JButton loginBtn;
+    JTextField emailTf;
+    JPasswordField passTf;
 
-	public void init_login() {
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BorderLayout());
+    public LoginForm(CustomerRepository customerRepository, StaffRepository staffRepository) {
+        init_login();
+        this.customerRepository = customerRepository;
+        this.staffRepository = staffRepository;
+    }
 
-		// //atas
-		JPanel topPanel = new JPanel();
-		JLabel headinglbl = new JLabel("LOGIN");
-		headinglbl.setBorder(new EmptyBorder(20, 0, 10, 0));
-		topPanel.add(headinglbl);
+    public void init_login() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
 
-		// tengah
-		JPanel centerPanel = new JPanel();
-		centerPanel.setLayout(new GridLayout(4, 1));
-		centerPanel.setBorder(new EmptyBorder(0, 40, 10, 40));
+        // //atas
+        JPanel topPanel = new JPanel();
+        JLabel headinglbl = new JLabel("LOGIN");
+        headinglbl.setBorder(new EmptyBorder(20, 0, 10, 0));
+        topPanel.add(headinglbl);
 
-		// Email
-		JLabel emaillbl = new JLabel("Email");
-		emailTf = new JTextField();
-		centerPanel.add(emaillbl);
-		centerPanel.add(emailTf);
+        // tengah
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(4, 1));
+        centerPanel.setBorder(new EmptyBorder(0, 40, 10, 40));
 
-		// Password
-		JLabel passlbl = new JLabel("Password");
-		passTf = new JPasswordField();
-		centerPanel.add(passlbl);
-		centerPanel.add(passTf);
+        // Email
+        JLabel emaillbl = new JLabel("Email");
+        emailTf = new JTextField();
+        centerPanel.add(emaillbl);
+        centerPanel.add(emailTf);
 
-		// bawah
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(new GridLayout(2, 1, 0, 10));
-		bottomPanel.setBorder(new EmptyBorder(10, 100, 20, 100));
-		loginBtn = new JButton("   Login   ");
-		loginBtn.addActionListener(this);
-		bottomPanel.add(loginBtn);
+        // Password
+        JLabel passlbl = new JLabel("Password");
+        passTf = new JPasswordField();
+        centerPanel.add(passlbl);
+        centerPanel.add(passTf);
 
-		registerBtn = new JButton("   Register as Customer   ");
-		bottomPanel.add(registerBtn);
-		registerBtn.addActionListener(this);
+        // bawah
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new GridLayout(2, 1, 0, 10));
+        bottomPanel.setBorder(new EmptyBorder(10, 100, 20, 100));
+        loginBtn = new JButton("   Login   ");
+        loginBtn.addActionListener(this);
+        bottomPanel.add(loginBtn);
 
-		mainPanel.add(topPanel, BorderLayout.NORTH);
-		mainPanel.add(centerPanel, BorderLayout.CENTER);
-		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+        registerBtn = new JButton("   Register as Customer   ");
+        bottomPanel.add(registerBtn);
+        registerBtn.addActionListener(this);
 
-		add(mainPanel);
-		setSize(400, 350);
-		setLocationRelativeTo(null);
-		setTitle("Login");
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setResizable(false);
-		setVisible(true);
-	}
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-	public LoginForm() {
-		init_login();
-	}
+        add(mainPanel);
+        setSize(400, 350);
+        setLocationRelativeTo(null);
+        setTitle("Login");
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setVisible(true);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
 
-		if (source.equals(loginBtn)) {
-			String email = emailTf.getText();
-			String password = String.valueOf(passTf.getPassword());
+        if (source.equals(loginBtn)) {
+            String email = emailTf.getText();
+            String password = String.valueOf(passTf.getPassword());
 
-			if (email.isEmpty() || password.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Username and password must be filled!", "Invalid",
-						JOptionPane.ERROR_MESSAGE);
-			} else {
-				ResultSet rs = Database.getInstance().executeQuery("SELECT * FROM `user` WHERE UserEmail = '" + email
-						+ "' AND UserPassword = '" + password + "'  ");
-				try {
-					boolean hasUser = rs.next();
-					if (!hasUser) {
-						JOptionPane.showMessageDialog(null, "Username and password don't exist!", "Invalid",
-								JOptionPane.ERROR_MESSAGE);
-						return;
-					}
+            if (email.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Username and password must be filled!", "Invalid",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                Optional<Customer> customerOptional = customerRepository.getByEmailAndPassword(email, password);
+                Optional<Staff> staffOptional = staffRepository.getByEmailAndPassword(email, password);
 
-					MainForm mainform = new MainForm();
+                boolean isCustomer = customerOptional.isPresent();
+                boolean isStaff = staffOptional.isPresent();
 
-					if (email.equals("admin@admin.com")) {
-						mainform.admin();
-						mainform.setVisible(true);
-					} else {
-						String userId = rs.getString("UserId");
-						ResultSet idStaff = Database.getInstance().executeQuery(
-								"SELECT * FROM `user` JOIN staff ON user.UserId = staff.UserId WHERE staff.UserId = '"
-										+ userId + "' ");
-						boolean hasStaff = idStaff.next();
-						if (hasStaff) {
-							mainform.staff();
-							mainform.setVisible(true);
-						} else {
-							ResultSet idCust = Database.getInstance().executeQuery(
-									"SELECT * FROM `user` JOIN customer ON user.UserId = customer.UserId WHERE customer.UserId = '"
-											+ userId + "' ");
-							boolean hasCustomer = idCust.next();
-							if (hasCustomer) {
-								mainform.customer();
-								mainform.setVisible(true);
-							}
-						}
-					}
+                if (!isCustomer && !isStaff) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Username and password don't exist!",
+                            "Invalid",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
+                }
 
-					this.dispose();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
+                User user = isCustomer ? customerOptional.get() : staffOptional.get();
+                Authentication.login(user);
 
-		} else if (source.equals(registerBtn)) {
-			new RegisterCustomer();
-		}
+                boolean isAdmin = user.isAdmin();
 
-	}
+                MainForm mainform = new MainForm();
+
+                if (isAdmin) {
+                    mainform.admin();
+                } else if (isCustomer) {
+                    mainform.customer();
+                } else {
+                    mainform.staff();
+                }
+
+                this.dispose();
+            }
+        } else if (source.equals(registerBtn)) {
+            new RegisterCustomer();
+        }
+
+    }
 
 }
