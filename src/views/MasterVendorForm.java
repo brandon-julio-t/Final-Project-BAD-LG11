@@ -165,6 +165,12 @@ public class MasterVendorForm extends JInternalFrame implements ActionListener {
 				panelSouth.add(panelButton);
 				add(panelSouth, BorderLayout.SOUTH);
 
+		setTitle(title);
+		setResizable(true);
+		setClosable(true);
+		setMaximizable(true);
+		setIconifiable(true);
+
 		setTitle("Vendor Form");
 		setSize(350, 500);
 		setResizable(false);

@@ -81,8 +81,6 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
         leftNorth.add(scroll);
         northPanel.add(leftNorth);
 
-        queryClothingData();
-
         // right north panel
         JPanel rightNorth = new JPanel();
         rightNorth.setLayout(new GridLayout(2, 1, 0, 0));
@@ -144,6 +142,14 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
         UpdateButton.addActionListener(this);
         DeleteButton.addActionListener(this);
         CheckOutButton.addActionListener(this);
+
+        queryClothingData();
+
+        setTitle(title);
+        setResizable(true);
+        setClosable(true);
+        setMaximizable(true);
+        setIconifiable(true);
 
         mainPanel.add(northPanel);
         mainPanel.add(southPanel);

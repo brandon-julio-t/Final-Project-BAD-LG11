@@ -195,6 +195,12 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 		panelSouth.add(panelButton);
 		add(panelSouth, BorderLayout.SOUTH);
 
+		setTitle(title);
+		setResizable(true);
+		setClosable(true);
+		setMaximizable(true);
+		setIconifiable(true);
+
 		setTitle("Clothing Form");
 		setSize(350, 500);
 		setResizable(false);

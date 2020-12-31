@@ -5,16 +5,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import facades.Authentication;
 import repositories.ClothingSizeRepository;
 import repositories.ClothingTypeRepository;
 import repositories.CustomerRepository;
 import repositories.StaffRepository;
 
 public class MainForm extends JFrame implements ActionListener {
+
+    private static MainForm instance = null;
 
     private JMenuBar menubar;
     private JDesktopPane desktopPane;
@@ -32,6 +36,8 @@ public class MainForm extends JFrame implements ActionListener {
     private JMenu menu_transaction;
 
     public MainForm() {
+        instance = this;
+
         desktopPane = new JDesktopPane();
         add(desktopPane);
 
@@ -78,6 +84,13 @@ public class MainForm extends JFrame implements ActionListener {
         setVisible(false);
     }
 
+    public static MainForm getInstance() {
+        if (instance == null) {
+            instance = new MainForm();
+        }
+        return instance;
+    }
+
     public void admin() {
         menu_account.setVisible(true);
         menu_manage.setVisible(true);
@@ -111,6 +124,7 @@ public class MainForm extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if (source == (menuitem_logout)) {
+            Authentication.logout();
             this.dispose();
             new LoginForm(
                     new CustomerRepository(),
@@ -132,7 +146,11 @@ public class MainForm extends JFrame implements ActionListener {
         } else if (source.equals(menuitem_new_staff)) {
             desktopPane.add(new RegisterStaff());
         } else if (source.equals(menuitem_review)) {
-            desktopPane.add(new ReviewForm());
+            desktopPane.add(new SaleHistoryView());
         }
+    }
+
+    public void addInternalFrame(JInternalFrame frame) {
+        desktopPane.add(frame);
     }
 }
