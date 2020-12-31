@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -24,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class ReviewForm extends JFrame {
+public class ReviewForm extends JInternalFrame {
 
 	private JPanel panelNorth;
 	private JPanel panelCenter;
@@ -128,7 +129,6 @@ public class ReviewForm extends JFrame {
 
 		setTitle("Review Form");
 		setSize(500, 500);
-		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -144,9 +144,7 @@ public class ReviewForm extends JFrame {
 			return false;
 		}
 
-		Boolean status = false;
-
-		return status;
+		return false;
 
 	}
 }
