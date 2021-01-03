@@ -1,5 +1,5 @@
 # Final Project BAD Kelas Semester 3
- assigned by Yudy Purnama
+ Assigned by Yudy Purnama
 
 ## Requirement
 
