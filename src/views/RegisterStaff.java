@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,7 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 import facades.Database;
 
-public class RegisterStaff extends JFrame implements ActionListener {
+public class RegisterStaff extends JInternalFrame implements ActionListener {
 
 	private JPanel panelNorth;
 	private JPanel panelCenter;
@@ -152,12 +152,15 @@ public class RegisterStaff extends JFrame implements ActionListener {
 
 		add(panelSouth, "South");
 
+		setResizable(true);
+		setClosable(true);
+		setMaximizable(true);
+		setIconifiable(true);
+
 		setTitle("Register Form");
 		setSize(400, 500);
-		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	@Override
@@ -248,12 +251,19 @@ public class RegisterStaff extends JFrame implements ActionListener {
 			}
 
 			try {
+				ResultSet rs = Database.getInstance()
+						.executeQuery("SELECT * FROM User WHERE UserEmail = '" + emailTemp + "'");
+				if (rs.next()) {
+					JOptionPane.showMessageDialog(this, "Email already exists");
+					return;
+				}
+
 				Database.getInstance().executeUpdate(
 						"INSERT INTO `user`(`UserName`, `UserGender`, `UserPhoneNumber`, `UserAddress`, `UserEmail`, `UserPassword`) VALUES ('"
 								+ nameTemp + "', '" + genderTemp + "', '" + phoneNoTemp + "', '" + addressTemp + "', '"
 								+ emailTemp + "', '" + passwordTemp + "')");
 
-				ResultSet rs = Database.getInstance()
+				rs = Database.getInstance()
 						.executeQuery("SELECT * FROM User WHERE UserEmail = '" + emailTemp + "'");
 				rs.next();
 				String UserId = rs.getString("UserId");
@@ -268,6 +278,11 @@ public class RegisterStaff extends JFrame implements ActionListener {
 
 			JOptionPane.showMessageDialog(this, "Register Success!", "Message", JOptionPane.INFORMATION_MESSAGE);
 
+			nameText.setText("");
+			phoneNoText.setText("");
+			addressText.setText("");
+			NPWPText.setText("");
+			salaryText.setText("");
 		} else if (e.getSource() == resetBtn) {
 			nameText.setText("");
 			phoneNoText.setText("");

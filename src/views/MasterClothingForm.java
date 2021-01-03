@@ -202,7 +202,7 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 		setIconifiable(true);
 
 		setTitle("Clothing Form");
-		setSize(350, 500);
+		setSize(500, 750);
 		setResizable(false);
 		setVisible(true);
 
@@ -214,28 +214,28 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 
 		// name
 		if (strnameField.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please input the name");
+			JOptionPane.showMessageDialog(this, "Please input the name");
 			nameField.requestFocusInWindow();
 			return false;
 		} else if (strnameField.length() < 5) {
-			JOptionPane.showMessageDialog(null, "Name length minimal 5");
+			JOptionPane.showMessageDialog(this, "Name length minimal 5");
 			nameField.requestFocusInWindow();
 			return false;
 		}
 
 		// price
 		if (priceField.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Please input the price");
+			JOptionPane.showMessageDialog(this, "Please input the price");
 			priceField.requestFocusInWindow();
 			return false;
 		} else if (!priceField.getText().endsWith("000")) {
-			JOptionPane.showMessageDialog(null, "Price must ends with 000");
+			JOptionPane.showMessageDialog(this, "Price must ends with 000");
 			priceField.requestFocusInWindow();
 			return false;
 		} else {
 			int intpriceField = Integer.parseInt(priceField.getText());
 			if (intpriceField <= 0) {
-				JOptionPane.showMessageDialog(null, "Price must be at least 1");
+				JOptionPane.showMessageDialog(this, "Price must be at least 1");
 				priceField.requestFocusInWindow();
 				return false;
 			}
@@ -244,7 +244,7 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 		// quantity
 		int intquantityField = (Integer) (quantityField.getValue());
 		if (intquantityField <= 0) {
-			JOptionPane.showMessageDialog(null, "Quantity must at least 1");
+			JOptionPane.showMessageDialog(this, "Quantity must at least 1");
 			quantityField.requestFocusInWindow();
 			return false;
 		}
@@ -256,13 +256,13 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 
 		if ((e.getSource() == delete || e.getSource() == update) && selectedId == -1) {
-			JOptionPane.showMessageDialog(null, "You have not select any row from table");
+			JOptionPane.showMessageDialog(this, "You have not select any row from table");
 			return;
 		}
 
 		if (e.getSource() == delete) {
 			Clothing.deleteProduct(selectedId);
-			JOptionPane.showMessageDialog(null, "Delete Data Success");
+			JOptionPane.showMessageDialog(this, "Delete Data Success");
 		} else {
 			if (!validateData())
 				return;
@@ -276,9 +276,9 @@ public class MasterClothingForm extends JInternalFrame implements ActionListener
 			if (e.getSource() == add) {
 				Clothing.insertProduct(strnameField, intclothingtypeField, intsizeField, intpriceField,
 						intquantityField);
-				JOptionPane.showMessageDialog(null, "Register Data Success");
+				JOptionPane.showMessageDialog(this, "Register Data Success");
 			} else if (e.getSource() == update) {
-				JOptionPane.showMessageDialog(null, "Update Data Success");
+				JOptionPane.showMessageDialog(this, "Update Data Success");
 				Clothing.updateProduct(selectedId, strnameField, intclothingtypeField, intsizeField, intpriceField,
 						intquantityField);
 			}

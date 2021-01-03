@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Random;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -148,7 +147,7 @@ public class RegisterCustomer extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	@Override
@@ -220,12 +219,19 @@ public class RegisterCustomer extends JFrame implements ActionListener {
 				}
 
 				try {
+					ResultSet rs = Database.getInstance()
+							.executeQuery("SELECT * FROM User WHERE UserEmail = '" + emailTemp + "'");
+					if (rs.next()) {
+						JOptionPane.showMessageDialog(this, "Email already exists");
+						return;
+					}
+
 					Database.getInstance().executeUpdate(
 							"INSERT INTO `user`(`UserName`, `UserGender`, `UserPhoneNumber`, `UserAddress`, `UserEmail`, `UserPassword`) VALUES ('"
 									+ nameTemp + "', '" + genderTemp + "', '" + phoneNoTemp + "', '" + addressTemp
 									+ "', '" + emailTemp + "', '" + passwordTemp + "')");
 
-					ResultSet rs = Database.getInstance()
+					rs = Database.getInstance()
 							.executeQuery("SELECT * FROM User WHERE UserEmail = '" + emailTemp + "'");
 					rs.next();
 					String UserId = rs.getString("UserId");
@@ -238,6 +244,11 @@ public class RegisterCustomer extends JFrame implements ActionListener {
 				}
 
 				JOptionPane.showMessageDialog(this, "Register Success!", "Message", JOptionPane.INFORMATION_MESSAGE);
+				nameText.setText("");
+				phoneNoText.setText("");
+				emailText.setText("");
+				addressText.setText("");
+				passwordText.setText("");
 			}
 		} else if (e.getSource() == resetBtn) {
 			nameText.setText("");

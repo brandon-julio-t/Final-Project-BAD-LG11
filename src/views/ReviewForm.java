@@ -96,22 +96,21 @@ public class ReviewForm extends JInternalFrame {
 
         submitBtn.addActionListener(e -> {
             if (RegisterData()) {
-                JOptionPane.showMessageDialog(null, "Register Data Successfully");
+                String Rating = RatingText.getValue().toString();
+                String Comments = CommentsText.getText();
+
+                TimeZone tz = TimeZone.getTimeZone("UTC");
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                df.setTimeZone(tz);
+                String reviewDate = df.format(new Date());
+
+                Database.getInstance().executeUpdate(
+                        "INSERT INTO review (ClothingId, UserId, ReviewScore, ReviewDescription, ReviewDate) VALUES (" + clothing.getClothingId() + ", " + Authentication.getUser().getUserId() + ", "
+                                + Rating + ", '" + Comments + "', '" + reviewDate + "')");
+
+                JOptionPane.showMessageDialog(this, "Thank you for the review!");
+                this.dispose();
             }
-            String Rating = RatingText.getValue().toString();
-            String Comments = CommentsText.getText();
-
-            TimeZone tz = TimeZone.getTimeZone("UTC");
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            df.setTimeZone(tz);
-            String reviewDate = df.format(new Date());
-
-            Database.getInstance().executeUpdate(
-                    "INSERT INTO review (ClothingId, UserId, ReviewScore, ReviewDescription, ReviewDate) VALUES (" + clothing.getClothingId() + ", " + Authentication.getUser().getUserId() + ", "
-                            + Rating + ", '" + Comments + "', '" + reviewDate + "')");
-
-            JOptionPane.showMessageDialog(null, "Thank you for the review!");
-            this.dispose();
         });
 
         ResetBtn = new JButton("Reset");
@@ -139,12 +138,12 @@ public class ReviewForm extends JInternalFrame {
         String strcomments = CommentsText.getText();
 
         if (strcomments.equals("")) {
-            JOptionPane.showMessageDialog(null, "Please write your comments");
+            JOptionPane.showMessageDialog(this, "Please write your comments");
             CommentsText.requestFocusInWindow();
             return false;
         }
 
-        return false;
+        return true;
 
     }
 }

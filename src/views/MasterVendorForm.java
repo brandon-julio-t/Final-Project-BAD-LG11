@@ -172,7 +172,7 @@ public class MasterVendorForm extends JInternalFrame implements ActionListener {
 		setIconifiable(true);
 
 		setTitle("Vendor Form");
-		setSize(350, 500);
+		setSize(700, 750);
 		setResizable(false);
 		setVisible(true);
 
@@ -240,13 +240,13 @@ private Boolean validateData() {
 public void actionPerformed(ActionEvent e) {
 
 	if ((e.getSource() == delete || e.getSource() == update) && selectedId == -1){
-		JOptionPane.showMessageDialog(null, "You have not select any row from table");
+		JOptionPane.showMessageDialog(this, "You have not select any row from table");
 		return;
 	}
 
 	if (e.getSource() == delete) {
 		Vendor.deleteVendor(selectedId);
-		JOptionPane.showMessageDialog(null, "Delete Data Success");
+		JOptionPane.showMessageDialog(this, "Delete Data Success");
 	} else {
 		if (!validateData())  return;
 
@@ -257,9 +257,9 @@ public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == add) {
 			Vendor.insertVendor(strnameField, stremailField, straddressField, strphoneField);
-			JOptionPane.showMessageDialog(null, "Register Data Success");
+			JOptionPane.showMessageDialog(this, "Register Data Success");
 		} else if (e.getSource() == update) {
-			JOptionPane.showMessageDialog(null, "Update Data Success");
+			JOptionPane.showMessageDialog(this, "Update Data Success");
 			Vendor.updateVendor(selectedId,strnameField, stremailField, straddressField, strphoneField);
 		}
 	}

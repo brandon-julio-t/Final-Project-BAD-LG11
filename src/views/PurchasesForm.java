@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -176,7 +177,8 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
         // Column 1
         panelRow4.add(new JPanel());
         // Column 2
-        panelRow4.setLayout(new GridLayout(1, 3));
+        panelRow4.setLayout(new GridLayout(1, 3, 16, 0));
+        panelRow4.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         panelRow4.add(addBtn);
         panelRow4.add(updateBtn);
         panelRow4.add(deleteBtn);

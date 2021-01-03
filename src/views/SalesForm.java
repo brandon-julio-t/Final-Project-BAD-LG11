@@ -1,7 +1,7 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +23,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import facades.Authentication;
 import facades.Database;
 
 public class SalesForm extends JInternalFrame implements ActionListener, MouseListener {
@@ -44,20 +45,16 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
         // main Panel
         mainPanel = new JPanel();
         mainPanel.setSize(1200, 750);
-        mainPanel.setLayout(new GridLayout(2, 1));
+        mainPanel.setLayout(new BorderLayout());
 
         // north Panel
         northPanel = new JPanel();
         northPanel.setSize(600, 750);
-        northPanel.setLayout(new GridLayout(1, 2));
+        northPanel.setLayout(new BorderLayout());
         northPanel.setVisible(true);
 
         // left north panel
-        JPanel leftNorth = new JPanel();
-        leftNorth.setLayout(new GridLayout(2, 1, 0, 0));
         JLabel clothing = new JLabel("Clothing");
-
-        leftNorth.setVisible(true);
 
         // table master
         tHeader = new Vector<>();
@@ -77,13 +74,8 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
 
         scroll = new JScrollPane(MasterTable);
         scroll.setSize(500, 300);
-        leftNorth.add(clothing);
-        leftNorth.add(scroll);
-        northPanel.add(leftNorth);
 
         // right north panel
-        JPanel rightNorth = new JPanel();
-        rightNorth.setLayout(new GridLayout(2, 1, 0, 0));
         JLabel cart = new JLabel("Cart");
 
         // table cart
@@ -103,14 +95,22 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
         CartTable.addMouseListener(this);
         scroll = new JScrollPane(CartTable);
         scroll.setSize(500, 300);
-        rightNorth.add(cart);
-        rightNorth.add(scroll);
-        northPanel.add(rightNorth);
+
+        JPanel labelPanel = new JPanel(new GridLayout(1, 2));
+        labelPanel.add(clothing);
+        labelPanel.add(cart);
+
+        JPanel tablePanel = new JPanel(new GridLayout(1, 2));
+        tablePanel.add(new JScrollPane(MasterTable));
+        tablePanel.add(new JScrollPane(CartTable));
+
+        northPanel.add(labelPanel, BorderLayout.NORTH);
+        northPanel.add(tablePanel, BorderLayout.CENTER);
 
         // south Panel
         southPanel = new JPanel();
         southPanel.setSize(400, 250);
-        southPanel.setLayout(new GridLayout(3, 1, 0, 0));
+        southPanel.setLayout(new GridLayout(3, 3, 0, 0));
 
         // up southPanel
         JPanel upSouthPanel = new JPanel();
@@ -119,24 +119,32 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
         upSouthPanel.add(quantity);
         upSouthPanel.add(QtySpinner);
 
+        southPanel.add(new JPanel());
         southPanel.add(upSouthPanel);
+        southPanel.add(new JPanel());
+
         // down southPanel
         JPanel downSouthPanel = new JPanel();
-        downSouthPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        downSouthPanel.setLayout(new GridLayout(1, 3, 16, 0));
         AddButton = new JButton("Add");
         UpdateButton = new JButton("Update");
         DeleteButton = new JButton("Delete");
         downSouthPanel.add(AddButton);
         downSouthPanel.add(UpdateButton);
         downSouthPanel.add(DeleteButton);
+
+        southPanel.add(new JPanel());
         southPanel.add(downSouthPanel);
+        southPanel.add(new JPanel());
 
         JPanel bottomSouthPanel = new JPanel();
         CheckOutButton = new JButton("Check Out");
-        bottomSouthPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        bottomSouthPanel.setLayout(new GridLayout(1, 1));
         bottomSouthPanel.add(CheckOutButton);
 
+        southPanel.add(new JPanel());
         southPanel.add(bottomSouthPanel);
+        southPanel.add(new JPanel());
 
         AddButton.addActionListener(this);
         UpdateButton.addActionListener(this);
@@ -151,8 +159,8 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
         setMaximizable(true);
         setIconifiable(true);
 
-        mainPanel.add(northPanel);
-        mainPanel.add(southPanel);
+        mainPanel.add(northPanel, BorderLayout.CENTER);
+        mainPanel.add(southPanel, BorderLayout.SOUTH);
         add(mainPanel);
         setSize(1366, 768);
         setTitle("Sales Form");
@@ -303,7 +311,7 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
 
                     String query = "INSERT INTO `SaleHeader` (`CustomerId`, `SaleDate`) VALUES (?, CURRENT_DATE)";
                     PreparedStatement stmt = Database.getInstance().prepareStatement(query);
-                    stmt.setInt(1, 3);
+                    stmt.setInt(1, Authentication.getUser().getUserId());
                     stmt.executeUpdate();
 
                     try (ResultSet generatedKey = stmt.getGeneratedKeys()) {
@@ -339,7 +347,7 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
                         e0.printStackTrace();
                     }
 
-                    JOptionPane.showMessageDialog(null, "Transaction Success!");
+                    JOptionPane.showMessageDialog(this, "Transaction Success!");
                     queryClothingData();
                 } catch (Exception err) {
                     err.printStackTrace();
