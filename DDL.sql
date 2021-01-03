@@ -1,8 +1,8 @@
-drop database if exists BAD_Teori;
+drop database if exists Clothing_Store;
 
-create database BAD_Teori;
+create database Clothing_Store;
 
-use BAD_Teori;
+use Clothing_Store;
 
 create table `User`
 (
