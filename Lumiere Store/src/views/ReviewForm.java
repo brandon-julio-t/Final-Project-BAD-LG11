@@ -89,6 +89,7 @@ public class ReviewForm extends JInternalFrame {
         panelSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         cancelBtn = new JButton("Cancel");
+        cancelBtn.addActionListener(e -> this.dispose());
         panelSouth.add(cancelBtn);
 
         submitBtn = new JButton("Submit");
@@ -114,6 +115,10 @@ public class ReviewForm extends JInternalFrame {
         });
 
         ResetBtn = new JButton("Reset");
+        ResetBtn.addActionListener(e -> {
+            RatingText.setValue(1);
+            CommentsText.setText("");
+        });
         panelSouth.add(ResetBtn);
 
         ResetBtn.addActionListener(e -> CommentsText.setText(""));
