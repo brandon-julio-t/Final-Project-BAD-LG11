@@ -1,4 +1,4 @@
-# Final Project BAD Kelas Semester 3 - Clothing Store
+# Final Project BAD Kelas Semester 3 - Clothing Store (Lumiere)
  Assigned by Yudy Purnama
 
 ## Requirement
