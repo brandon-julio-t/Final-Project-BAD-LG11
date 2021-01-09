@@ -216,3 +216,5 @@ select COLUMN_NAME                                                              
 from information_schema.COLUMNS
 where TABLE_SCHEMA = 'Lumiere_Store'
   and TABLE_NAME = 'purchasedetail';
+
+select * from user join staff c on User.UserId = c.UserId

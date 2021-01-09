@@ -196,6 +196,10 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
 
         assignButtonsAction();
 
+        tableCloth.getSelectionModel().addListSelectionListener(e -> {
+            qtyField.setValue(1);
+        });
+
         setTitle(title);
         setResizable(true);
         setClosable(true);
@@ -292,6 +296,12 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
 
         checkoutBtn.addActionListener(e -> {
             DefaultTableModel tableModel = (DefaultTableModel) tableCart.getModel();
+
+            if (tableModel.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Empty Cart!");
+                return;
+            }
+
             Vector purchaseData = tableModel.getDataVector();
 
             Database.getInstance().beginTransaction();
@@ -348,6 +358,8 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
                 tableClothModel.setDataVector(queryClothings(), masterColumnNames);
 
                 Database.getInstance().commit();
+
+                qtyField.setValue(1);
             } catch (SQLException err) {
                 Database.getInstance().rollback();
                 err.printStackTrace();
