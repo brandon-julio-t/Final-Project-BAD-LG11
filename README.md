@@ -1,4 +1,4 @@
-# Final Project BAD Kelas Semester 3 - Clothing Store (Lumiere)
+# Final Project BAD Kelas Semester 3 - Clothing Store
  Assigned by Yudy Purnama
 
 ## Requirement
@@ -16,3 +16,4 @@ Disusun Oleh (LG11):
 1. Luise Anthonia Alkins / 2301890195
 1. Natalia / 2301866675
 1. Liza Azzahra Malaysiani / 2301951871
+
