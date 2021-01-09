@@ -17,8 +17,8 @@ create table `User`
 
 create table Customer
 (
-    UserId        int not null primary key,
-    CustomerPoint int not null,
+    UserId     int     not null primary key,
+    CustomerId char(5) not null check (CustomerId regexp 'CS[0-9][0-9][0-9]'),
     foreign key (UserId) references User (UserId)
 );
 
@@ -148,12 +148,12 @@ values ('Siward Battisson', 'Male', '1 Carioca Plaza', '816 830 3827', 'sbattiss
         'AzdQYjqax1pQ'),
        ('Waylon Deery', 'Male', '6846 Oak Court', '573 134 9108', 'wdeery9@hibu.com', 'rj2Xt7Kt');
 
-insert into `Customer` (UserId, CustomerPoint)
-values (2, 0),
-       (3, 0),
-       (4, 0),
-       (5, 0),
-       (6, 0);
+insert into `Customer` (UserId, CustomerId)
+values (2, 'CS001'),
+       (3, 'CS002'),
+       (4, 'CS003'),
+       (5, 'CS004'),
+       (6, 'CS005');
 
 insert into StaffPosition (StaffPositionName)
 values ('admin'),
