@@ -248,7 +248,7 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
         addBtn.addActionListener(e -> {
             int row = tableCloth.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "Please select a row in clothing table first!");
+                JOptionPane.showMessageDialog(this, "Please select a row in clothing table first!");
                 return;
             }
 
@@ -275,7 +275,7 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
         updateBtn.addActionListener(e -> {
             int row = tableCart.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "Please select a row in cart table first!");
+                JOptionPane.showMessageDialog(this, "Please select a row in cart table first!");
                 return;
             }
 
@@ -286,7 +286,7 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
         deleteBtn.addActionListener(e -> {
             int row = tableCart.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "Please select a row in cart table first!");
+                JOptionPane.showMessageDialog(this, "Please select a row in cart table first!");
                 return;
             }
 
@@ -352,7 +352,7 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
                     tableModel.removeRow(0);
                 }
 
-                JOptionPane.showMessageDialog(null, "Transaction Success!");
+                JOptionPane.showMessageDialog(this, "Transaction Success!");
 
                 DefaultTableModel tableClothModel = (DefaultTableModel) tableCloth.getModel();
                 tableClothModel.setDataVector(queryClothings(), masterColumnNames);
