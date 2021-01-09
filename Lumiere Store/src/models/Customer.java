@@ -6,18 +6,18 @@ import java.sql.SQLException;
 import models.abstracts.User;
 
 public class Customer extends User {
-    private Integer customerPoint;
+    private String customerId;
 
     public Customer(ResultSet resultSet) throws SQLException {
         super(resultSet);
-        customerPoint = resultSet.getInt("CustomerPoint");
+        customerId = resultSet.getString("CustomerId");
     }
 
-    public Integer getCustomerPoint() {
-        return customerPoint;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerPoint(Integer customerPoint) {
-        this.customerPoint = customerPoint;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }
