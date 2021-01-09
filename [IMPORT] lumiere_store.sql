@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2021 at 04:15 PM
+-- Generation Time: Jan 09, 2021 at 07:40 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `clothing_store`
+-- Database: `lumiere_store`
 --
 
 -- --------------------------------------------------------
@@ -129,6 +129,7 @@ INSERT INTO `customer` (`UserId`, `CustomerPoint`) VALUES
 CREATE TABLE `purchasedetail` (
   `PurchaseId` int(11) NOT NULL,
   `ClothingId` int(11) NOT NULL,
+  `PurchasePrice` int(11) NOT NULL,
   `PurchaseQuantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -169,6 +170,7 @@ CREATE TABLE `review` (
 CREATE TABLE `saledetail` (
   `SaleId` int(11) NOT NULL,
   `ClothingId` int(11) NOT NULL,
+  `SalePrice` int(11) NOT NULL,
   `SaleQuantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

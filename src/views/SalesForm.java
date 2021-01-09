@@ -334,8 +334,15 @@ public class SalesForm extends JInternalFrame implements ActionListener, MouseLi
                         for (int i = 0; i < cloth.size(); i++) {
                             String clothingId = cloth.get(i);
                             String qty = CartQuantity.get(i);
-                            String query3 = "INSERT INTO `SaleDetail` (`SaleId`, `ClothingId`, `SaleQuantity`) VALUES ('%s','%s','%s')";
-                            query3 = String.format(query3, SaleId, clothingId, qty);
+
+                            stmt = Database.getInstance().prepareStatement("select ClothingPrice from Clothing where ClothingId = ?");
+                            stmt.setString(1, clothingId);
+                            ResultSet rs = stmt.executeQuery();
+                            rs.next();
+                            String price = rs.getString("ClothingPrice");
+
+                            String query3 = "INSERT INTO `SaleDetail` (`SaleId`, `ClothingId`, `SalePrice`, `SaleQuantity`) VALUES ('%s','%s','%s','%s')";
+                            query3 = String.format(query3, SaleId, clothingId, price, qty);
                             Database.getInstance().executeUpdate(query3);
                             String sql = "UPDATE Clothing SET ClothingStock = ClothingStock - ? WHERE ClothingId = ?";
                             stmt = Database.getInstance().prepareStatement(sql);

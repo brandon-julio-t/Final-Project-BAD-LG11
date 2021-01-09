@@ -317,11 +317,18 @@ public class PurchasesForm extends JInternalFrame implements ActionListener, Mou
                     int clothingId = Integer.parseInt(String.valueOf(dataVector.get(0)));
                     int quantity = Integer.parseInt(String.valueOf(dataVector.get(4)));
 
-                    sql = "insert into `PurchaseDetail` (PurchaseId, ClothingId, PurchaseQuantity) values (?, ?, ?)";
+                    stmt = Database.getInstance().prepareStatement("select ClothingPrice from Clothing where ClothingId = ?");
+                    stmt.setInt(1, clothingId);
+                    rs = stmt.executeQuery();
+                    rs.next();
+                    int price = rs.getInt("ClothingPrice");
+
+                    sql = "insert into `PurchaseDetail` (PurchaseId, ClothingId, PurchasePrice, PurchaseQuantity) values (?, ?, ?, ?)";
                     stmt = Database.getInstance().prepareStatement(sql);
                     stmt.setInt(1, purchaseId);
                     stmt.setInt(2, clothingId);
-                    stmt.setInt(3, quantity);
+                    stmt.setInt(3, price);
+                    stmt.setInt(4, quantity);
                     stmt.executeUpdate();
 
                     sql = "update `Clothing` set `ClothingStock` = `ClothingStock` + ? where `ClothingId` = ?";

@@ -1,8 +1,8 @@
-drop database if exists Clothing_Store;
+drop database if exists Lumiere_Store;
 
-create database Clothing_Store;
+create database Lumiere_Store;
 
-use Clothing_Store;
+use Lumiere_Store;
 
 create table `User`
 (
@@ -96,6 +96,7 @@ create table SaleDetail
 (
     SaleId       int not null,
     ClothingId   int not null,
+    SalePrice    int not null,
     SaleQuantity int not null,
     primary key (SaleId, ClothingId),
     foreign key (SaleId) references SaleHeader (SaleId),
@@ -116,6 +117,7 @@ create table PurchaseDetail
 (
     PurchaseId       int not null,
     ClothingId       int not null,
+    PurchasePrice    int not null,
     PurchaseQuantity int not null,
     primary key (PurchaseId, ClothingId),
     foreign key (PurchaseId) references PurchaseHeader (PurchaseId),
@@ -212,5 +214,5 @@ select COLUMN_NAME                                                              
        IS_NULLABLE                                                                as 'Nullable',
        ''                                                                         as 'Notes'
 from information_schema.COLUMNS
-where TABLE_SCHEMA = 'BAD_Teori'
-  and TABLE_NAME = 'vendor'
+where TABLE_SCHEMA = 'Lumiere_Store'
+  and TABLE_NAME = 'vendor';

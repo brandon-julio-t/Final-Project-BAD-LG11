@@ -11,7 +11,7 @@ public final class Database {
 
     private static final String USERNAME = "root"; // change with your MySQL username, the default username is 'root'
     private static final String PASSWORD = ""; // change with your MySQL password, the default password is empty
-    private static final String DATABASE_NAME = "bad_teori"; // change with the database name that you use
+    private static final String DATABASE_NAME = "Lumiere_Store"; // change with the database name that you use
     private static final String HOST = "localhost:3306"; // change with your MySQL host, the default port is 3306
     private static final String CONECTION = String.format("jdbc:mysql://%s/%s", HOST, DATABASE_NAME);
 

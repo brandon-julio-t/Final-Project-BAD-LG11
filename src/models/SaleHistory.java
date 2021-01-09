@@ -7,17 +7,17 @@ import java.util.Date;
 public class SaleHistory {
     private Integer clothingId;
     private String clothingName;
-    private Integer clothingPrice;
     private ClothingType clothingType;
     private Date saleDate;
+    private Integer salePrice;
     private Integer saleQuantity;
 
     public SaleHistory(ResultSet resultSet) throws SQLException {
         clothingId = resultSet.getInt("ClothingId");
         clothingName = resultSet.getString("ClothingName");
-        clothingPrice = resultSet.getInt("ClothingPrice");
         clothingType = new ClothingType(resultSet);
         saleDate = resultSet.getDate("SaleDate");
+        salePrice = resultSet.getInt("SalePrice");
         saleQuantity = resultSet.getInt("SaleQuantity");
     }
 
@@ -37,12 +37,12 @@ public class SaleHistory {
         this.clothingName = clothingName;
     }
 
-    public Integer getClothingPrice() {
-        return clothingPrice;
+    public Integer getSalePrice() {
+        return salePrice;
     }
 
-    public void setClothingPrice(Integer clothingPrice) {
-        this.clothingPrice = clothingPrice;
+    public void setSalePrice(Integer salePrice) {
+        this.salePrice = salePrice;
     }
 
     public ClothingType getClothingType() {
@@ -70,6 +70,6 @@ public class SaleHistory {
     }
 
     public Integer getSubTotal() {
-        return getSaleQuantity() * getClothingPrice();
+        return getSaleQuantity() * getSalePrice();
     }
 }

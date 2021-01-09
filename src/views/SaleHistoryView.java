@@ -55,7 +55,7 @@ public class SaleHistoryView extends AbstractInternalFrame {
             row.add(saleHistory.getClothingId());
             row.add(saleHistory.getClothingName());
             row.add(saleHistory.getClothingType());
-            row.add(saleHistory.getClothingPrice());
+            row.add(saleHistory.getSalePrice());
             row.add(saleHistory.getSaleQuantity());
             row.add(saleHistory.getSubTotal());
             row.add(saleHistory.getSaleDate());

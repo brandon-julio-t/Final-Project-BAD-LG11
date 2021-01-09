@@ -19,7 +19,7 @@ public class SaleHistoryRepository implements ReadonlyRepository<SaleHistory> {
         try {
             Collection<SaleHistory> entities = new ArrayList<>();
             String sql =
-                    "select c.ClothingId, ClothingName, ClothingPrice, c.ClothingTypeId, ClothingTypeName, SaleDate, SaleQuantity\n" +
+                    "select c.ClothingId, ClothingName, c.ClothingTypeId, ClothingTypeName, SaleDate, SalePrice, SaleQuantity\n" +
                             "from saleheader sh\n" +
                             "         join saledetail sd on sh.SaleId = sd.SaleId\n" +
                             "         join clothing c on sd.ClothingId = c.ClothingId\n" +
