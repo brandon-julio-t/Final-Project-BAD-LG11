@@ -215,4 +215,4 @@ select COLUMN_NAME                                                              
        ''                                                                         as 'Notes'
 from information_schema.COLUMNS
 where TABLE_SCHEMA = 'Lumiere_Store'
-  and TABLE_NAME = 'vendor';
+  and TABLE_NAME = 'purchasedetail';
